@@ -1,0 +1,6 @@
+---
+- name: hal9000
+  hosts: localhost
+  gather_facts: no
+  connection: local
+

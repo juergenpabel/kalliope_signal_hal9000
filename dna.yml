@@ -1,0 +1,10 @@
+---
+name: "hal9000"
+type: "signal"
+author: "juergenpabel"
+
+kalliope_supported_version:
+  - 0.7
+tags:
+  - "signal"
+  - "hal9000"
