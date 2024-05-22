@@ -1,6 +1,3 @@
-import time
-
-from threading import Thread
 import paho.mqtt.publish as mqtt_publish
 
 from kalliope.core import SignalModule, MissingParameter
@@ -19,6 +16,9 @@ class Hal9000(SignalModule):
 					for neuron in synapse.neurons:
 						if neuron.name == 'mqtt_publisher':
 							mqtt_publish.single(neuron.parameters['topic'], "starting", hostname=neuron.parameters['broker_ip'])
+
+	def start(self):
+		pass
 
 	@staticmethod
 	def check_parameters(parameters):
