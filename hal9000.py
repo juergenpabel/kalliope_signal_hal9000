@@ -56,7 +56,7 @@ class Hal9000(SignalModule, threading_Thread):
 
 
 	def on_notification_received(self, notification=None, payload=None):
-		if notification == 'stt_warmup':
+		if notification == 'hal9000_stt_warmup':
 			stt_wav_filename = None
 			if 'filename' in payload:
 				stt_wav_filename = payload['filename']
