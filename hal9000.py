@@ -15,7 +15,7 @@ logger = logging.getLogger("kalliope")
 
 class Hal9000(SignalModule, NotificationManager, threading_Thread):
 	def __init__(self, **kwargs):
-		SignalModule.__init__(**kwargs)
+		SignalModule.__init__(self, **kwargs)
 		NotificationManager.__init__(self)
 		threading_Thread.__init__(self, name=Hal9000)
 		self.mqtt_broker_ip = '127.0.0.1'
