@@ -6,15 +6,17 @@ import logging
 from kalliope.core import SignalModule, MissingParameter
 from kalliope.core.Cortex import Cortex
 from kalliope.core.OrderListener import OrderListener
+from kalliope.core.NotificationManager import NotificationManager
 from kalliope.core import Utils
 
 logging.basicConfig()
 logger = logging.getLogger("kalliope")
 
 
-class Hal9000(SignalModule, threading_Thread):
+class Hal9000(SignalModule, NotificationManager, threading_Thread):
 	def __init__(self, **kwargs):
-		super(Hal9000, self).__init__(**kwargs)
+		SignalModule.__init__(**kwargs)
+		NotificationManager.__init__(self)
 		threading_Thread.__init__(self, name=Hal9000)
 		self.mqtt_broker_ip = '127.0.0.1'
 		self.mqtt_broker_port = 1883
