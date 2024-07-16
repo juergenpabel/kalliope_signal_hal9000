@@ -22,7 +22,7 @@ class Hal9000(SignalModule, NotificationManager, threading_Thread):
 		self.mqtt_broker_ip = '127.0.0.1'
 		self.mqtt_broker_port = 1883
 		self.mqtt_client_id = 'kalliope:signal:hal9000'
-		self.mqtt_topic = 'hal9000/event/kalliope/status'
+		self.mqtt_topic = 'hal9000/event/kalliope/runlevel'
 		for synapse in list(super(Hal9000, self).get_list_synapse()):
 			for signal in synapse.signals:
 				if signal.name == 'hal9000' and signal.parameters is not None:
@@ -30,7 +30,7 @@ class Hal9000(SignalModule, NotificationManager, threading_Thread):
 					self.mqtt_broker_port = signal.parameters.get('port', self.mqtt_broker_port)
 					self.mqtt_client_id = signal.parameters.get('client_id', self.mqtt_client_id)
 					self.mqtt_topic = signal.parameters.get('topic', self.mqtt_topic)
-		Cortex.save('kalliope_status', 'starting')
+		Cortex.save('kalliope_runlevel', 'starting')
 
 
 	def run(self):
@@ -38,7 +38,7 @@ class Hal9000(SignalModule, NotificationManager, threading_Thread):
 		try:
 			mqtt = paho_mqtt_client.Client(self.mqtt_client_id)
 			mqtt.connect(self.mqtt_broker_ip, self.mqtt_broker_port)
-			while Cortex.get_from_key('kalliope_status') == 'starting':
+			while Cortex.get_from_key('kalliope_runlevel') == 'starting':
 				mqtt.publish(self.mqtt_topic, 'starting')
 				mqtt.loop(timeout=0.5)
 				time_sleep(0.5)
