@@ -38,11 +38,11 @@ class Hal9000(SignalModule, NotificationManager, threading_Thread):
 		try:
 			mqtt = paho_mqtt_client.Client(self.mqtt_client_id)
 			mqtt.connect(self.mqtt_broker_ip, self.mqtt_broker_port)
+			mqtt.will_set(self.mqtt_topic, 'killed')
 			while Cortex.get_from_key('kalliope_runlevel') == 'starting':
 				mqtt.publish(self.mqtt_topic, 'starting')
 				mqtt.loop(timeout=0.5)
 				time_sleep(0.5)
-			mqtt.disconnect()
 			mqtt.loop_forever()
 		except BaseException as e:
 			logger.error(f"[signal:hal9000] {e}")
