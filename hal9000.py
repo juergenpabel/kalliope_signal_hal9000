@@ -37,8 +37,8 @@ class Hal9000(SignalModule, NotificationManager, threading_Thread):
 		Utils.print_info('[Hal9000] Starting thread')
 		try:
 			mqtt = paho_mqtt_client.Client(self.mqtt_client_id)
-			mqtt.connect(self.mqtt_broker_ip, self.mqtt_broker_port)
 			mqtt.will_set(self.mqtt_topic, 'killed')
+			mqtt.connect(self.mqtt_broker_ip, self.mqtt_broker_port)
 			while Cortex.get_from_key('kalliope_runlevel') == 'starting':
 				mqtt.publish(self.mqtt_topic, 'starting')
 				mqtt.loop(timeout=0.5)
