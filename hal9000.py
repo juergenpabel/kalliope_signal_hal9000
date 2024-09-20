@@ -39,13 +39,10 @@ class Hal9000(SignalModule, NotificationManager, threading_Thread):
 			mqtt = paho_mqtt_client.Client(self.mqtt_client_id)
 			mqtt.will_set(self.mqtt_topic, 'killed')
 			mqtt.connect(self.mqtt_broker_ip, self.mqtt_broker_port)
-			while Cortex.get_from_key('kalliope_runlevel') == 'starting':
-				mqtt.publish(self.mqtt_topic, 'starting')
-				mqtt.loop(timeout=0.5)
-				time_sleep(0.5)
+			mqtt.publish(self.mqtt_topic, 'starting')
 			mqtt.loop_forever()
 		except BaseException as e:
-			logger.error(f"[signal:hal9000] {e}")
+			logger.error(f"[signal:hal9000] {type(e).__name__} => {str(e)}")
 		Utils.print_info('[Hal9000] Ending thread')
 
 
